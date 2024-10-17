@@ -1,0 +1,193 @@
+.textocentral{
+    background-color: #f0dfcc;
+    border-radius: 50px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 35px 10px 20px rgba(0, 0, 0, 0.2);
+
+}
+
+.productos{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+
+}
+
+li{
+    transition: transform 0.5s ease; /* Duración de la transición y suavidad */
+
+
+    list-style: none;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 30px;
+    background-color: #f0dfcc ;
+    box-shadow: 35px 20px 20px rgba(0, 0, 0, 0.2);
+    margin-top: 50px;
+
+    
+}
+li:hover {
+    transform: translateY(-50px);
+}
+ul{
+    flex-wrap: wrap;
+}
+.form-delete{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.delete-button{
+    margin-top: 30px;
+    margin-bottom: 50px;
+    height: 50px;
+    width: 250px;
+    border-radius: 15px;
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+
+}
+.delete-button:hover{
+    transform: translateY(-15px);
+}
+
+img{
+    height: 300px;
+    width: 300px;
+}
+#upload-text{
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+
+.subir_img{
+    display: flex;
+    justify-content: center;
+
+    
+}
+.upload{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    width: 800px;
+    background-color: #f0dfcc;
+    font-size: 20px;
+    box-shadow: 35px 10px 20px rgba(0, 0, 0, 0.2);
+    margin-bottom: 50px;
+
+}
+
+.upload-button{
+    margin-top: 30px;
+   margin-bottom: 15px;
+    height: 50px;
+    width: 250px;
+    border-radius: 15px;
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+
+}
+.upload-button:hover{
+    transform: translateY(-15px);
+}
+.nombre_producto{
+    margin-top: 15px;
+}
+
+.edit-button{
+    margin-top: 30px;
+
+    height: 50px;
+    width: 250px;
+    border-radius: 15px;
+    background-color: rgb(243, 242, 242);
+    color: black;
+    font-size: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+
+}
+.edit-button:hover{
+    transform: translateY(-15px);
+    background-color: rgb(228, 228, 228);
+
+
+}
+
+.formulario-editar{
+    
+    width: 700px;
+    height: 500px;
+    margin-left: 550px;
+    margin-top: 150px;
+    border-radius: 30px;
+    background-color: #f0dfcc;
+    box-shadow: 50px 30px 20px rgba(0, 0, 0, 0.2);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.editar-nombre{
+    font-size: 30px;
+}
+.editar-nombre input{
+    border-radius: 30px;
+    height: 30px;
+    font-size: 20px;
+}
+.editar-imagen{
+    font-size: 30px;
+
+}
+.save-botton{
+
+    margin-left: 150px;
+    height: 50px;
+    width: 250px;
+    border-radius: 15px;
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+}
+.save-botton:hover{
+    transform: translateY(-15px);
+    background-color: rgb(228, 228, 228);
+    border: rgb(228, 228, 228);
+    color: black;
+
+}
+.cancel-botton{
+    margin-top: 35px;
+    height: 50px;
+    width: 250px;
+    border-radius: 15px;
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.cancel-botton:hover{
+    transform: translateY(-15px);
+    background-color:red;
+    border: none;
+    color: white;
+}
+

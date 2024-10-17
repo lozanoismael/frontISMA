@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Proyecto Flask</title>
+    <link rel="stylesheet" href="../static/index.css">
+</head>
+<body>
+    <div class="textocentral">
+        <h1>PRUEBA CRUD PRODUCTOSSSS</h1>
+    </div>
+    <div>
+        <ul class="productos">
+            {% for producto in productos %}
+                <li>
+                    <h2>{{ producto.nombre_producto }}</h2>
+                    <img src="data:image/png;base64,{{ producto.imagen_64 }}" alt="{{ producto.nombre_producto }}">       
+                    <form method="GET" action="/editar/{{ producto.id }}">
+                        <button class="edit-button" type="submit">Editar Producto</button>
+                    </form>
+                    <form class="form-delete" method="POST" action="/imagen/delete">
+                        <!-- Campo oculto que contiene el id del producto -->
+                        <input type="hidden" name="id_producto" value="{{ producto.id }}">
+                        <button class="delete-button" type="submit">Eliminar Producto</button>
+                    </form>
+                    
+                </li>
+            {% else %}
+                <li>No hay productos disponibles.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="textocentral" id="upload-text">
+        <h1>SUBIR PRODUCTO</h1>
+    </div>
+    <div class="subir_img">
+        
+        <form class="upload" method="POST" action="/upload" enctype="multipart/form-data">
+            <label class="nombre_producto" for="nombre_producto">Nombre del producto:</label>
+            <input type="text" id="nombre_producto" name="nombre_producto" required>
+            <br><br>
+            <input class="input-upload" type="file" name="imagen" accept="image/*" required>
+            <button class="upload-button" type="submit">Subir Imagen</button>
+        </form>
+    </div>
+    
+</body>
+</html>
+

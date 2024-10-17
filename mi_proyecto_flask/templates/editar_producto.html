@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Producto</title>
+    <link rel="stylesheet" href="../static/index.css">
+</head>
+<body>
+    <div class="textocentral">
+        <h1>EDITAR PRODUCTO</h1>
+    </div>
+    
+    <div class="formulario-editar">
+        <form method="POST" action="/editar/{{ producto['id_product'] }}" enctype="multipart/form-data">
+            <div class="editar-nombre">
+                <label for="nombre_producto">Nombre del producto:</label>
+                <input type="text" name="nombre_producto" value="{{ producto['nombre_producto'] }}" required>
+            </div>
+            
+            <br><br>
+            <div class="editar-imagen">
+                <label for="imagen">Cambiar imagen:</label>
+                <input type="file" name="imagen" accept="image/*">
+            <br><br>
+            </div>
+            
+            <button class="save-botton" type="submit">Guardar Cambios</button>
+        </form>
+
+        <form method="GET" action="/">
+            <button class="cancel-botton" type="submit">Cancelar</button>
+        </form>
+    </div>
+
+   
+
+</body>
+</html>
