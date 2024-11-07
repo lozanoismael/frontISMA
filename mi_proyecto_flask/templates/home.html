@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Eccomerce</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+   <link rel="stylesheet" href="../static/index.css">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=person " />
+</head>
+<body>
+    
+    
+    
+    
+    
+
+    <div class="barra">
+        <button class="login-botton"><ion-icon name="menu-outline"></ion-icon></button>
+
+        {% if image_data %}
+            <img class="logo" src="{{ image_data }}" alt="Imagen del Logo">
+        {% else %}
+            <p>No se encontró la imagen del logo.</p>
+        {% endif %}
+        <div class="iconos">
+            {% if session.get('username') %}
+    
+            <button class="login-botton"> <a  href="{{ url_for('logout') }}"><ion-icon name="log-in-outline"></ion-icon></a></button>
+            <button class="login-botton" type="button" onclick="document.getElementById('carrito').classList.toggle('mostrar')"><ion-icon name="cart-outline"></ion-icon></button>
+
+            {% else %}
+            <button class="login-botton" ><a  href="{{ url_for('login') }}"><ion-icon name="person-outline"></ion-icon></a></button>
+            
+
+            <button class="login-botton" type="button" onclick="document.getElementById('carrito').classList.toggle('mostrar')"><ion-icon name="cart-outline"></ion-icon></button>
+            {% endif %}
+            {%if session.get('role')=='admin'%}
+            <button class="login-botton" ><a  href="{{ url_for('index') }}"><ion-icon name="storefront-outline"></ion-icon></a></button>
+            {% endif %}
+        </div>
+
+        
+        
+        
+    </div>
+    <div id="carrito" class="carrito">
+        <h1>Carrito de Compras</h1>
+        <ul class="tarjetacart">
+            {% for producto in carrito %}
+                <li>
+                    <h2 class="h2cart">{{ producto.nombre_producto }}</h2>
+                    <div class="controlador">
+                          <img src="data:image/png;base64,{{ producto.imagen_64 }}" alt="{{ producto.nombre_producto }}"> 
+                          <div class="cantidad">
+                                <button type="button" class="btn-cantidad" onclick="this.parentNode.querySelector('input').stepDown()"><ion-icon class="flechas" name="arrow-back-outline"></ion-icon></button>
+                                <input type="number" name="cantidad" min="1" value="{{ producto.cantidad }}" style="width: 40px; text-align: center;">
+                                <button type="button" class="btn-cantidad" onclick="this.parentNode.querySelector('input').stepUp()"><ion-icon class="flechas" name="arrow-forward-outline"></ion-icon></button>
+                            </div>
+                          <form action="{{ url_for('eliminar_del_carrito') }}" method="post">
+                            <input type="hidden" name="id_producto" value="{{ producto.id_product }}">
+                            <button type="submit"><ion-icon class="iconobasura" name="trash-outline"></ion-icon></button>
+                            </form>
+                        
+                          
+                    </div>
+                    
+                 
+                </li>
+                
+            {% else %}
+                <h3>El Carrito esta vacio....</h3>
+            {% endfor %}
+            
+        </ul>
+        <form action="{{ url_for('finalizar_compra') }}" method="post">
+            <button class="final_button">Finalizar Compra</button>  
+        </form>
+    
+    
+        <form action="{{ url_for('vaciar_carrito') }}" method="post">
+            <button class="clear_button">Vaciar Carrito</button>
+        </form>
+        
+        
+    </div>
+
+    <ul class="productos">
+        {% for data_individual in data %}
+            <li class="liproductos">
+                <h2>{{ data_individual.nombre_producto }}</h2>
+                <img src="data:image/png;base64,{{ data_individual.imagen_64 }}" alt="{{ data_individual.nombre_producto }}">
+                <form id="buy" method="POST" action="/comprar">
+                    <input type="hidden" name="id_producto" value="{{ data_individual.id }}">
+                    <input type="hidden" name="nombre_producto" value="{{ data_individual.nombre_producto }}">
+                    <input type="hidden" name="imagen_producto" value="{{ data_individual.imagen_64 }}">
+                    <button class="buy-button" >Add to cart <ion-icon class="cart-icon" name="cart-outline"></ion-icon></button>
+                </form>
+        {% else %}
+            <li>No hay productos disponibles.</li>
+        {% endfor %}
+    </ul>
+        
+    
+
+
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

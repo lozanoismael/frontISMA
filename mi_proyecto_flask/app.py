@@ -2,16 +2,142 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 import requests 
 import os
 import jwt  # Importación de la librería para manejar JWT
+import uuid
+
 
 
 
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Genera una clave secreta aleatoria
-@app.route('/')
+@app.route("/")
+def home():
+    try:
+        response = requests.get('https://api:8000/imagenes/',cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem" )
+        if response.status_code == 200:
+            data = response.json()
+            image_data = None
+            for item in data:
+                if item.get("nombre_producto") == "Logo":
+                    image_data = f"data:image/jpeg;base64,{item.get('imagen_64')}"
+                    break   
+
+            # Inicializar el carrito de productos
+            carrito_productos = []
+            for id_producto, cantidad in session.get('carrito', {}).items():
+                response = requests.get(f'https://api:8000/imagen/{id_producto}',cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem" )
+                if response.status_code == 200:
+                    producto = response.json()
+                    producto['cantidad'] = cantidad  # Añadir la cantidad al producto
+                    carrito_productos.append(producto) 
+        else:
+            return "Error al cargar la imagen desde la API.", 500
+
+    except requests.RequestException as e:
+        return f"Error de conexión: {e}", 500
+
+    print("Contenido del carrito en la página de inicio:", session.get('carrito'))  # Debugging
+    return render_template("home.html", image_data=image_data, data=data, carrito=carrito_productos)
+
+@app.route("/comprar", methods=["POST"])
+def comprar():
+    id_producto = request.form.get("id_producto")
+    cantidad = int(request.form.get("cantidad", 1))  # Obtener cantidad del formulario, por defecto 1
+
+    if 'carrito' not in session:
+        session['carrito'] = {}
+
+    # Si el producto ya está en el carrito, actualizar la cantidad
+    if id_producto in session['carrito']:
+        session['carrito'][id_producto] += cantidad
+    else:
+        session['carrito'][id_producto] = cantidad  # Añadir el nuevo producto con su cantidad
+
+    session.modified = True
+    return redirect(url_for('home'))
+
+
+
+@app.route("/eliminar_del_carrito", methods=["POST"])
+def eliminar_del_carrito():
+    id_producto = request.form.get("id_producto")
+
+    # Imprimir el carrito para depuración
+    print("Carrito antes de eliminar:", session.get('carrito'))
+
+    # Verificar si el carrito existe en la sesión
+    if 'carrito' in session:
+        # Si el producto está en el carrito, reducir la cantidad
+        if id_producto in session['carrito']:
+            if session['carrito'][id_producto] > 1:  # Si hay más de uno, reduce la cantidad
+                session['carrito'][id_producto] -= 1
+            else:  # Si es uno, elimínalo del carrito
+                del session['carrito'][id_producto]
+        
+        session.modified = True  # Guardar los cambios en la sesión
+
+    return redirect(url_for('home'))
+
+
+
+
+
+@app.route("/vaciar_carrito", methods=["POST"])
+def vaciar_carrito():
+    # Verificar si el carrito existe en la sesión y vaciarlo
+    if 'carrito' in session:
+        session['carrito'] = []  # Vaciar el carrito
+        session.modified = True  # Guardar los cambios en la sesión
+
+    return redirect(url_for('home'))  # Redirigir a la página principal
+
+
+
+@app.route("/finalizar_compra", methods=["POST"])
+def finalizar_compra():
+    if 'carrito' in session and session['carrito']:
+        # Generar un identificador único para la orden
+        id_pedido = str(uuid.uuid4())  # ID único para el pedido
+        ordenes = []
+
+        for id_producto, cantidad in session['carrito'].items():
+            response = requests.get(f'https://api:8000/imagen/{id_producto}',cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem")
+            if response.status_code == 200:
+                producto = response.json()
+                orden = {
+                    "id": id_pedido,  # Usa el mismo ID para todos los productos
+                    "imagen": producto['imagen_64'],
+                    "nombre_producto": producto['nombre_producto'],
+                    "cantidad": cantidad
+                }
+                ordenes.append(orden)
+
+        # Enviar la lista a la API
+        api_response = requests.post("https://api:8000/ordenes/", json={"ordenes": ordenes},cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem")
+
+        if api_response.status_code == 200:
+            session.pop('carrito', None)
+            return redirect(url_for('home'))
+        else:
+            print(f"Respuesta de la API: {api_response.text}")  # Imprimir la respuesta para depuración
+            return f"Error al finalizar la compra: {api_response.text}", 500
+
+    return redirect(url_for('home'))
+
+
+
+
+
+
+
+@app.route('/dashboard')
 def index():
+    # Verificar si el usuario es un administrador
+    if session.get('role') != 'admin':
+        flash("No tienes permiso para entrar aca .")
+        return redirect(url_for('home'))
     # Hacer la petición GET a tu API
-    response = requests.get('http://api:8000/imagenes/')
+    response = requests.get('https://api:8000/imagenes/',cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem")
     
     # Verificar si la respuesta es exitosa
     if response.status_code == 200:
@@ -26,8 +152,8 @@ def eliminar_producto():
     id_producto = request.form.get('id_producto')
     
     if id_producto:
-        url = f'http://api:8000/imagen/delete/{id_producto}'
-        response = requests.delete(url)
+        url = f'https://api:8000/imagen/delete/{id_producto}'
+        response = requests.delete(url,cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem")
         
         if response.status_code == 200:
             return redirect(url_for('index'))
@@ -49,9 +175,9 @@ def upload_imagen():
 
     files = {'file': (file.filename, file.stream, file.content_type)}  # Archivo en formato multipart
 
-    url = f'http://api:8000/upload/?nombre_producto={nombre_producto}'
+    url = f'https://api:8000/upload/?nombre_producto={nombre_producto}'
 
-    response = requests.post(url, files=files)
+    response = requests.post(url, files=files,cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem")
 
     if response.status_code == 200:
         return redirect(url_for('index'))
@@ -61,7 +187,7 @@ def upload_imagen():
 
 @app.route('/editar/<int:id_producto>', methods=['GET'])
 def mostrar_formulario_editar(id_producto):
-    response = requests.get(f'http://api:8000/imagen/{id_producto}')
+    response = requests.get(f'https://api:8000/imagen/{id_producto}',cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem")
     
     if response.status_code == 200:
         producto = response.json()
@@ -79,13 +205,13 @@ def guardar_cambios_producto(id_producto):
     if file and file.filename != '':
         files = {'file': (file.filename, file.stream, file.content_type)}
     
-    url = f'http://api:8000/productos/{id_producto}/editar'
+    url = f'https://api:8000/productos/{id_producto}/editar'
     data = {'nombre_producto': nombre_producto}
 
     if files:
-        response = requests.put(url, files=files, data=data)
+        response = requests.put(url, files=files, data=data,cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem")
     else:
-        response = requests.put(url, data=data)
+        response = requests.put(url, data=data,cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem")
 
     if response.status_code == 200:
         return redirect(url_for('index'))
@@ -105,7 +231,7 @@ def login():
 
         # Enviar los datos como query parameters
         try:
-            response = requests.post('http://api:8000/login', params={'username': username, 'password': password}) # LogimDto(username, password)
+            response = requests.post('https://api:8000/login', params={'username': username, 'password': password},cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem") # LogimDto(username, password)
         except requests.exceptions.RequestException as e:
             flash(f"Error de conexión con el servidor: {e}")
             return redirect(url_for('login'))
@@ -115,7 +241,6 @@ def login():
             data = response.json()
             session['username'] = username
             session['role'] = data.get('role')  # Guardar el rol del usuario en la sesión
-            print(f"Rol guardado: {session['role']}")  # Depuración
             flash("Inicio de sesión exitoso.")
             return redirect(url_for('index'))
         elif response.status_code == 400:
@@ -149,7 +274,7 @@ def register():
 
         # Enviar los datos como query parameters
         try:
-            response = requests.post('http://api:8000/register', params={'username': username, 'password': password, 'role': role})
+            response = requests.post('https://api:8000/register', params={'username': username, 'password': password, 'role': role},cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem")
         except requests.exceptions.RequestException as e:
             flash(f"Error de conexión con el servidor: {e}")
             return redirect(url_for('register'))
@@ -176,7 +301,7 @@ def mostrar_usuarios():
 
     try:
         # Hacer la petición GET a la API para obtener todos los usuarios
-        response = requests.get('http://api:8000/usuarios')
+        response = requests.get('https://api:8000/usuarios',cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem")
 
         if response.status_code == 200:
             usuarios = response.json()
@@ -207,11 +332,11 @@ def editar_usuario(id):
 
         # Enviar los datos al API como query parameters
         try:
-            response = requests.put(f'http://api:8000/usuarios/{id}/editar', params={
+            response = requests.put(f'https://api:8000/usuarios/{id}/editar', params={
                 'username': username,
                 'password': password,
                 'role': role
-            })
+            },cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem")
 
             if response.status_code == 200:
                 flash("Usuario actualizado correctamente.")
@@ -225,7 +350,7 @@ def editar_usuario(id):
 
     # Obtener los datos actuales del usuario
     try:
-        response = requests.get(f'http://api:8000/usuarios/{id}')
+        response = requests.get(f'https://api:8000/usuarios/{id}',cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem")
         if response.status_code == 200:
             usuario = response.json()
         else:
@@ -246,7 +371,7 @@ def eliminar_usuario(id):
 
     # Enviar solicitud para eliminar al usuario en la API
     try:
-        response = requests.delete(f'http://api:8000/usuarios/{id}/eliminar')
+        response = requests.delete(f'https://api:8000/usuarios/{id}/eliminar',cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem")
 
         if response.status_code == 200:
             flash("Usuario eliminado correctamente.")
@@ -258,5 +383,52 @@ def eliminar_usuario(id):
     return redirect(url_for('mostrar_usuarios'))
 
 
+@app.route('/ordenes', methods=['GET'])
+def mostrar_ordenes():
+    if session.get('role') != 'admin':
+        flash("No tienes permiso para acceder a esta página.")
+        return redirect(url_for('index'))
+
+    try:
+        response = requests.get('https://api:8000/seeorders',cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem")
+
+        if response.status_code == 200:
+            ordenes = response.json()
+        else:
+            flash(f"Error al obtener los usuarios: {response.status_code}")
+            ordenes = []
+    except requests.exceptions.RequestException as e:
+        flash(f"Error de conexión con el servidor: {e}")
+        ordenes = []
+
+    return render_template('ordenes.html', ordenes=ordenes)
+
+
+
+@app.route('/eliminar_pedido/<string:pedido_id>', methods=['POST'])
+def eliminar_pedido(pedido_id):
+    # Verificar si el usuario es un administrador
+    if session.get('role') != 'admin':
+        flash("No tienes permiso para eliminar usuarios.")
+        return redirect(url_for('index'))
+
+    # Enviar solicitud para eliminar al usuario en la API
+    try:
+        response = requests.delete(f'https://api:8000/ordenes/eliminar/{pedido_id}',cert=("/certs/client-cert.pem", "/certs/client-key.pem"), verify="/certs/ca-cert.pem")
+
+        if response.status_code == 200:
+            flash("pedido eliminado correctamente.")
+        else:
+            flash(f"Error al eliminar el pedido: {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        flash(f"Error de conexión con el servidor: {e}")
+    
+    return redirect(url_for('mostrar_ordenes'))
+
+
+
+
+
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000,debug=True)
+    app.run(host="0.0.0.0", port=5000,debug=True,ssl_context=("/certs/client-cert.pem", "/certs/client-key.pem"))

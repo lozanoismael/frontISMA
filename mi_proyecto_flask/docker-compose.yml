@@ -7,8 +7,13 @@ services:
       - "5000:5000"
     volumes:
       - .:/app
+      - ./certs:/certs
+
     environment:
-      - API_URL=http://api:8000
+      - API_URL=https://api:8000
+      - CLIENT_CERT=/certs/client-cert.pem
+      - CLIENT_KEY=/certs/client-key.pem
+      - CA_CERT=/certs/ca-cert.pem
     networks:
       - external-network
 

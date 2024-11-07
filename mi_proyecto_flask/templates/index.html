@@ -19,21 +19,26 @@
         <h1>PRUEBA CRUD PRODUCTOSSSS</h1>
     </div>
     <h1>Bienvenido {{ session['username'] }}</h1>
+    <div class="iconos">
+        {% if session.get('username') %}
+            <button class="login-botton"> <a  href="{{ url_for('logout') }}"><ion-icon name="log-in-outline"></ion-icon></a></button>
+        {% endif %}
+        <div class="iconosderecha">
+            {% if session.get('role') == 'admin' %}
+                <button class="edit-buttonicon"><a href="{{ url_for('mostrar_usuarios') }}" class="btn"><ion-icon name="people-outline"></ion-icon></a></button>
+                <button class="orders-button"><a href="{{url_for('mostrar_ordenes')}}"><ion-icon name="bag-handle-outline"></ion-icon></button></a>
+                <button class="orders-button" ><a  href="{{ url_for('home') }}"><ion-icon name="storefront-outline"></ion-icon></a></button>
+            {% endif %}
+        </div>
+    </div>
     
-    {% if session.get('username') %}
-    <button class="login-botton"> <a  href="{{ url_for('logout') }}">Logout</a></button>
-{% else %}
-    <button class="login-botton"><a  href="{{ url_for('login') }}">Login</a></button>
-{% endif %}
-    {% if session.get('role') == 'admin' %}
-      <button class="edit-button"><a href="{{ url_for('mostrar_usuarios') }}" class="btn">Ver todos los usuarios</a></button>
-  {% endif %}
+    
 
 
     <div>
         <ul class="productos">
             {% for producto in productos %}
-                <li>
+                <li class="liproductos">
                     <h2>{{ producto.nombre_producto }}</h2>
                     <img src="data:image/png;base64,{{ producto.imagen_64 }}" alt="{{ producto.nombre_producto }}">       
                     <form method="GET" action="/editar/{{ producto.id }}">
@@ -59,12 +64,16 @@
             <label class="nombre_producto" for="nombre_producto">Nombre del producto:</label>
             <input type="text" id="nombre_producto" name="nombre_producto" required>
             <br><br>
-            <input class="input-upload" type="file" name="imagen" accept="image/*" required>
+            <!-- Input y Label para el botón de subida -->
+            <input id="file-upload" class="input-upload" type="file" name="imagen" accept="image/*" required>
+            <label for="file-upload" class="upload-label">Seleccionar Imagen</label>
+
             <button class="upload-button" type="submit">Subir Imagen</button>
         </form>
     </div>
 
-    
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
 

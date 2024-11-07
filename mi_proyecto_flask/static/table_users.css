@@ -1,5 +1,4 @@
-body{
-
+body {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,75 +6,68 @@ body{
     height: 900px;
     background-color: #f0dfcc;
 }
-h1{
+
+h1 {
     font-size: 50px;
 }
-.cuerpo{
+
+.cuerpo {
     border: 1px solid black;
-    height: 500px;
+    height: auto;
     width: 900px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;      
     align-items: center;
     flex-direction: column;
     background-color: white;
     border-radius: 30px;
+    padding: 20px; /* Espaciado interno */
 }
-table{
-    width: 800px;
+
+.table-container {
+    width: 800px; /* Ancho de la tabla */
+    max-height: 400px; /* Alto máximo para la tabla */
+    overflow-y: auto; /* Habilita el desplazamiento vertical */
+    border: 1px solid #ddd; /* Borde del contenedor */
+}
+
+.table-container::-webkit-scrollbar{
+    
+    background-color: rgba(128, 128, 128, 0.329); /* Fondo de la barra con opacidad */
+    border-radius: 30px;
+
+}
+.table-container::-webkit-scrollbar-thumb {
+    background-color: rgba(71, 71, 71, 0.562); /* Color del botón que se mueve */
+    border-radius: 30px; /* Bordes redondeados para el botón */
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(19, 19, 19, 0.8); /* Color al pasar el mouse sobre el botón */
+}
+
+table {
+    width: 100%; /* Ancho total del contenedor */
     height: auto;
     text-align: center;
+    border-collapse: collapse; /* Para eliminar el espacio entre bordes de celdas */
 }
-thead tr{
+
+
+thead tr {
     font-size: 20px;
-    border-radius: 30px;
+    background-color: #f2f2f2; /* Color de fondo del encabezado */
 }
-tbody{
+
+tbody {
     font-size: 20px;
 }
 
-tr td{
+tr td {
     height: 55px;
 }
 
-
-
-.actions{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-}
-.boton-formulario {
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    border: none;
-    transition: transform 0.5s ease; /* Duración de la transición y suavidad */
-
-
-}
-
-
-
-
-.boton-formulario:hover{
-    border: 1px solid black;
-}
-.boton-formulario:hover i{
-    scale: 1.5;
-}
-
-
-
-
-
-
-
-
-
-
-.volver{
+.volver {
     margin-top: 30px;
     height: 50px;
     width: 200px;
@@ -85,12 +77,18 @@ tr td{
     font-size: 20px;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
-.volver a{
+
+.volver a {
     text-decoration: none;
     color: white;
 }
-.volver:hover{
+.volver:hover a{
+    color: #000;
+}
+
+.volver:hover {
     transform: translateY(-15px);
-    background-color:black;
+    background-color: rgb(196, 193, 193);
+    color:black;
     border: none;
 }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/table_users.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Órdenes</title>
+</head>
+<body>
+    <div class="cuerpo">
+        <h1>Lista de Órdenes</h1>   
+        <div class="table-container"> <!-- Contenedor para la tabla -->
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID de Pedido</th>
+                        <th>Imagen</th>
+                        <th>Nombre de Producto</th>
+                        <th>Cantidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for orden in ordenes %}
+                        {% for producto in orden.productos %}
+                            <tr>
+                                {% if loop.first %}
+                                    <td rowspan="{{ orden.productos | length }}">{{ orden.pedido_id }}</td>
+                                {% endif %}
+                                <td><img src="data:image/jpeg;base64,{{ producto.imagen }}" alt="Imagen del Producto" style="width: 100px; height: auto;"></td>
+                                <td>{{ producto.nombre_producto }}</td>
+                                <td>{{ producto.cantidad }}</td>
+                                {% if loop.first %}
+                                    <td rowspan="{{ orden.productos | length }}">
+                                        <form action="{{ url_for('eliminar_pedido', pedido_id=orden['pedido_id']) }}" method="POST" style="display:inline;">
+                                            <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este pedido?');">Eliminar</button>
+                                        </form>
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <button class="volver"><a href="{{ url_for('index') }}">Volver al inicio</a></button>
+    </div>
+</body>
+
+</html>
