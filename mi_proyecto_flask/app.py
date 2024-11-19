@@ -81,15 +81,15 @@ def eliminar_del_carrito():
 
 
 
-
 @app.route("/vaciar_carrito", methods=["POST"])
 def vaciar_carrito():
     # Verificar si el carrito existe en la sesión y vaciarlo
     if 'carrito' in session:
-        session['carrito'] = []  # Vaciar el carrito
+        session['carrito'] = {}  # Vaciar el carrito como un diccionario vacío
         session.modified = True  # Guardar los cambios en la sesión
 
     return redirect(url_for('home'))  # Redirigir a la página principal
+
 
 
 
