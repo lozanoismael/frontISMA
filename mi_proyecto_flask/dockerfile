@@ -13,4 +13,5 @@ COPY . .
 # Exponer puerto 8000 para el front
 EXPOSE 5000
 
-CMD ["python3", "app.py"]
+CMD ["python3", "mi_proyecto_flask/app.py"]
+
