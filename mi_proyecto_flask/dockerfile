@@ -1,18 +1,16 @@
-# Dockerfile para el Frontend
 FROM python:3.9-slim
 
 # Directorio de trabajo
 WORKDIR /app
 
 # Copiar requirements.txt e instalar dependencias
-COPY requirements.txt requirements.txt
+COPY mi_proyecto_flask/requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar la aplicación
-COPY . .
+COPY mi_proyecto_flask /app
 
-# Exponer el puerto 5000
-EXPOSE 5000
+# Exponer puerto
+EXPOSE 3000
 
-# Comando para iniciar la aplicación
 CMD ["python3", "app.py"]
