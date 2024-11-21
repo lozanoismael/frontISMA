@@ -9,6 +9,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar la aplicación
 COPY mi_proyecto_flask /app
+# Copiar certificados
+COPY mi_proyecto_flask/certs /certs
+
 
 # Exponer puerto
 EXPOSE 3000
