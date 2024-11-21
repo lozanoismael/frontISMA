@@ -1,19 +1,14 @@
 FROM python:3.9-slim
 
-# Directorio de trabajo
 WORKDIR /app
 
-# Copiar requirements.txt e instalar dependencias
 COPY mi_proyecto_flask/requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar la aplicación
 COPY mi_proyecto_flask /app
-# Copiar certificados
 COPY mi_proyecto_flask/certs /certs
 
 
-# Exponer puerto
 EXPOSE 3000
 
-CMD ["python3", "app.py"]
+CMD ["python3", "app.py", "--host", "0.0.0.0", "--port", "8000"]
