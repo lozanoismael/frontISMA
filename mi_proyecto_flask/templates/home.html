@@ -87,6 +87,7 @@
     </div>
 
     <ul class="productos">
+        {% if session.get('username') %}
         {% for data_individual in data %}
         {% if data_individual.nombre_producto != "Logo" %}
             <li class="liproductos">
@@ -100,8 +101,9 @@
                 </form>
             </li>
         {% endif %}
+        {% endif %}
     {% else %}
-        <li>No hay productos disponibles.</li>
+        <li>No has iniciado sesion o no hay productos  disponibles</li>
     {% endfor %}
     
     </ul>
