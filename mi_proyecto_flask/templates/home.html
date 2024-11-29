@@ -88,25 +88,29 @@
 
     <ul class="productos">
         {% if session.get('username') %}
-        {% for data_individual in data %}
-        {% if data_individual.nombre_producto != "Logo" %}
-            <li class="liproductos">
-                <h2>{{ data_individual.nombre_producto }}</h2>
-                <img src="data:image/png;base64,{{ data_individual.imagen_64 }}" alt="{{ data_individual.nombre_producto }}">
-                <form id="buy" method="POST" action="/comprar">
-                    <input type="hidden" name="id_producto" value="{{ data_individual.id }}">
-                    <input type="hidden" name="nombre_producto" value="{{ data_individual.nombre_producto }}">
-                    <input type="hidden" name="imagen_producto" value="{{ data_individual.imagen_64 }}">
-                    <button class="buy-button">Add to cart <ion-icon class="cart-icon" name="cart-outline"></ion-icon></button>
-                </form>
-            </li>
+            {% if data %}
+                {% for data_individual in data %}
+                    {% if data_individual.nombre_producto != "Logo" %}
+                        <li class="liproductos">
+                            <h2>{{ data_individual.nombre_producto }}</h2>
+                            <img src="data:image/png;base64,{{ data_individual.imagen_64 }}" alt="{{ data_individual.nombre_producto }}">
+                            <form id="buy" method="POST" action="/comprar">
+                                <input type="hidden" name="id_producto" value="{{ data_individual.id }}">
+                                <input type="hidden" name="nombre_producto" value="{{ data_individual.nombre_producto }}">
+                                <input type="hidden" name="imagen_producto" value="{{ data_individual.imagen_64 }}">
+                                <button class="buy-button">Add to cart <ion-icon class="cart-icon" name="cart-outline"></ion-icon></button>
+                            </form>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <li>No hay productos disponibles</li>
+            {% endif %}
+        {% else %}
+            <li>No has iniciado sesión</li>
         {% endif %}
-        {% endif %}
-    {% else %}
-        <li>No has iniciado sesion o no hay productos  disponibles</li>
-    {% endfor %}
-    
     </ul>
+    
         
     
 
