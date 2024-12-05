@@ -2,11 +2,9 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY mi_proyecto_flask/requirements.txt requirements.txt
+COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY mi_proyecto_flask /app
-COPY mi_proyecto_flask/certs /certs
 
 
 EXPOSE 3000
