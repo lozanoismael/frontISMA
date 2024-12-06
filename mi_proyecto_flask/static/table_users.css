@@ -1,24 +1,29 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9; /* Gris muy claro */
+    background-color: #000000; /* Negro */
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     height: 100vh;
+    color: #FFFFFF; /* Blanco */
+    margin: 0;
 }
 
 h1 {
     font-size: 40px;
-    color: #5a5a5a; /* Gris oscuro */
+    color: #FFD700; /* Dorado */
     margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
 }
 
 .cuerpo {
-    background-color: white;
+    background-color: #333333; /* Azul oscuro */
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Sombra más intensa */
     width: 80%;
     max-width: 900px;
 }
@@ -27,39 +32,52 @@ h1 {
     width: 100%;
     max-height: 400px;
     overflow-y: auto;
-    border: 1px solid #ddd;
+    border: 1px solid #FFD700; /* Dorado */
+    border-radius: 8px;
+    background-color: #FFFFFF; /* Blanco */
 }
 
 table {
     width: 100%;
     text-align: center;
     border-collapse: collapse;
+    color: #333333; /* Gris oscuro */
+    background-color: #FFFFFF; /* Blanco */
 }
 
 thead tr {
-    background-color: #f0dfcc; /* Beige claro */
+    background-color: #D32F2F; /* Rojo */
+    color: #FFFFFF; /* Blanco */
 }
 
 tbody tr:nth-child(even) {
-    background-color: #f7f7f7; /* Gris claro */
+    background-color: #F7F7F7; /* Gris claro */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #FFFFFF; /* Blanco */
 }
 
 td {
     padding: 12px;
     font-size: 16px;
+    border: 1px solid #DDD;
 }
 
 .volver {
-    background-color: #a88e68; /* Marrón claro */
+    background-color: #8E735B; /* Madera clara */
     color: white;
     font-size: 18px;
     padding: 12px;
     width: 200px;
     border-radius: 8px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 20px;
+    text-align: center;
+    cursor: pointer;
 }
 
 .volver:hover {
-    background-color: #d28a61; /* Marrón medio */
-    cursor: pointer;
+    background-color: #D32F2F; /* Rojo */
+    transform: scale(1.05);
 }

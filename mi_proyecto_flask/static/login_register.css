@@ -1,71 +1,110 @@
+/* Estilos para el cuerpo */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0dfcc; /* Beige claro */
+    font-family: 'Cinzel', serif; /* Fuente estilo barbería */
+    background-color: #333333; /* Azul oscuro */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin: 0;
+    color: #FFFFFF; /* Blanco */
 }
 
+/* Estilo del formulario */
 .formulario_login {
-    background-color: white;
+    background-color: #FFFFFF; /* Blanco */
     width: 350px;
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Sombra intensa */
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+/* Título */
 h1 {
-    font-size: 30px;
-    color: #5a5a5a; /* Gris oscuro */
-    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #FFD700; /* Dorado */
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-.datos {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+/* Estilo de las etiquetas */
+label {
     font-size: 16px;
-    width: 100%;
+    color: #8E735B; /* Madera clara */
+    margin-bottom: 5px;
+    display: block;
+    text-transform: capitalize;
 }
 
+/* Estilo de los campos de entrada */
 .inputs {
     border-radius: 8px;
-    height: 35px;
+    height: 40px;
     font-size: 16px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #8E735B; /* Madera clara */
     width: 100%;
+    background-color: #F9F9F9; /* Gris muy claro */
+    color: #333333; /* Gris oscuro */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+.inputs:focus {
+    outline: none;
+    border-color: #FFD700; /* Dorado */
+    box-shadow: 0 0 5px #FFD700;
+}
+
+/* Botones */
 .botton-login {
-    background-color: #a88e68; /* Marrón claro */
+    background-color: #8E735B; /* Madera clara */
     color: white;
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: bold;
     padding: 12px;
     width: 100%;
     border-radius: 8px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .botton-login:hover {
-    background-color: #d28a61; /* Marrón medio */
+    background-color: #D32F2F; /* Rojo */
+    transform: scale(1.05);
 }
 
-p {
-    font-size: 14px;
-    text-align: center;
-}
-
+/* Enlaces */
 a {
+    font-size: 14px;
+    color: #FFD700; /* Dorado */
     text-decoration: none;
-    color: #a88e68; /* Marrón claro */
 }
 
 a:hover {
-    color: #d28a61; /* Marrón medio */
+    color: #FFB300; /* Amarillo mostaza */
+    text-decoration: underline;
+}
+
+/* Cabecera del formulario */
+.cabecera {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.cabecera a span {
+    font-size: 24px;
+    color: #FFD700; /* Dorado */
+}
+
+.cabecera a span:hover {
+    color: #FFB300; /* Amarillo mostaza */
+    cursor: pointer;
 }

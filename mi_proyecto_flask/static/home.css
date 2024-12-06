@@ -1,6 +1,7 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9; /* Gris muy claro */
+    background-color: #B0BEC5; /* Gris metálico */
+    color: #333333; /* Gris oscuro */
     margin: 0;
     padding: 0;
 }
@@ -10,14 +11,16 @@ body {
     height: 50px;
     width: 50px;
     border-radius: 50%;
-    background-color: #a88e68; /* Marrón claro */
+    background-color: #333333; /* Azul oscuro */
     color: white;
     font-size: 20px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .login-botton:hover {
-    background-color: #d28a61; /* Marrón medio */
+    background-color: #D32F2F; /* Rojo */
+    transform: scale(1.1);
 }
 
 .productos {
@@ -29,19 +32,21 @@ body {
 }
 
 .liproductos {
-    background-color: white;
+    background-color: #FFFFFF; /* Blanco */
     border-radius: 10px;
     padding: 20px;
     width: 250px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .liproductos:hover {
     transform: translateY(-10px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 img {
     max-width: 100%;
     border-radius: 8px;
+    border: 1px solid #8E735B; /* Tono madera */
 }

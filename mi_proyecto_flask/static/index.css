@@ -1,21 +1,69 @@
+/* Estilo base */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9; /* Gris muy claro */
+    background-color: #B0BEC5; /* Gris metálico */
+    color: #333333; /* Gris oscuro */
     margin: 0;
     padding: 0;
 }
 
-.textocentral {
-    background-color: #f0dfcc; /* Beige claro */
-    border-radius: 30px;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Barra superior */
+.barra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000000; /* Negro */
+    padding: 10px 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.logo-text {
+    font-family: 'Cinzel', serif; /* Fuente clásica */
+    font-size: 32px; /* Tamaño del texto principal */
+    font-weight: 700;
+    color: #FFD700; /* Dorado */
+    text-transform: uppercase;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3); /* Sombra ligera */
+}
+
+.logo-text span {
+    font-size: 20px; /* Subtítulo */
+    font-weight: 400;
+    color: #8E735B; /* Madera clara */
+}
+
+/* Iconos de usuario */
+.iconos {
+    display: flex;
+    gap: 15px;
+}
+
+.login-botton {
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #FFD700; /* Dorado */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.login-botton:hover {
+    color: #FFB300; /* Amarillo mostaza */
+    transform: scale(1.1);
+}
+
+/* Productos */
 .productos {
     display: flex;
     flex-wrap: wrap;
@@ -25,62 +73,98 @@ body {
 }
 
 .liproductos {
-    background-color: white;
+    background-color: #FFFFFF; /* Blanco */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 250px;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
 }
 
 .liproductos:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-img {
+.liproductos img {
     max-width: 100%;
+    height: auto;
     border-radius: 8px;
+    margin-bottom: 15px;
+    border: 2px solid #8E735B; /* Tono madera */
 }
 
-.delete-button, .upload-button, .buy-button {
-    background-color: #a88e68; /* Marrón claro */
+.liproductos h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333333; /* Azul oscuro */
+}
+
+/* Botones */
+button, .buy-button {
+    background-color: #8E735B; /* Madera clara */
     color: white;
-    font-size: 16px;
+    font-size: 14px;
     border: none;
-    padding: 12px;
-    width: 100%;
+    padding: 10px 15px;
     border-radius: 8px;
-    transition: background-color 0.3s ease;
-}
-
-.delete-button:hover, .upload-button:hover, .buy-button:hover {
-    background-color: #d28a61; /* Marrón medio */
+    transition: background-color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
 }
 
-.form-delete, .upload {
+button:hover, .buy-button:hover {
+    background-color: #D32F2F; /* Rojo */
+    transform: scale(1.05);
+}
+
+/* Carrito */
+.carrito {
+    background-color: #FFFFFF; /* Blanco */
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.carrito h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333333; /* Gris oscuro */
+}
+
+.tarjetacart li {
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-direction: column;
-}
-
-.upload-button {
-    margin-top: 20px;
-}
-
-.edit-button, .cancel-botton {
-    background-color: #f0dfcc; /* Beige claro */
-    color: black;
-    font-size: 16px;
-    border: none;
-    padding: 12px;
-    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #B0BEC5; /* Gris metálico */
     border-radius: 8px;
-    transition: background-color 0.3s ease;
+    background-color: #FFFFFF;
 }
 
-.edit-button:hover, .cancel-botton:hover {
-    background-color: #d28a61; /* Marrón medio */
+.tarjetacart img {
+    width: 50px;
+    height: auto;
+    border-radius: 5px;
 }
 
+.final_button, .clear_button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    background-color: #333333; /* Azul oscuro */
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.final_button:hover, .clear_button:hover {
+    background-color: #D32F2F; /* Rojo */
+}
