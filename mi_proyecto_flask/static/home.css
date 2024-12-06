@@ -1,31 +1,47 @@
-.login-botton a{
-    text-decoration: none;
-    color: white;
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9; /* Gris muy claro */
+    margin: 0;
+    padding: 0;
 }
-.login-botton{
-    margin-left: 35%;
-    margin-top: 50px;
+
+.login-botton {
+    margin-top: 20px;
     height: 50px;
     width: 50px;
-    border-radius: 50px;
-    background-color: black;
+    border-radius: 50%;
+    background-color: #a88e68; /* Marrón claro */
     color: white;
     font-size: 20px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
-.login-botton:hover{
-    transform: translateY(-15px);
-    background-color:black;
-    border: none;
-    
-
-
+.login-botton:hover {
+    background-color: #d28a61; /* Marrón medio */
 }
-.productos{
+
+.productos {
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
 
+.liproductos {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
+.liproductos:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+img {
+    max-width: 100%;
+    border-radius: 8px;
 }

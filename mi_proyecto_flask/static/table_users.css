@@ -1,94 +1,65 @@
 body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9; /* Gris muy claro */
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 900px;
-    background-color: #f0dfcc;
+    height: 100vh;
 }
 
 h1 {
-    font-size: 50px;
+    font-size: 40px;
+    color: #5a5a5a; /* Gris oscuro */
+    margin-bottom: 20px;
 }
 
 .cuerpo {
-    border: 1px solid black;
-    height: auto;
-    width: 900px;
-    display: flex;
-    justify-content: center;      
-    align-items: center;
-    flex-direction: column;
     background-color: white;
-    border-radius: 30px;
-    padding: 20px; /* Espaciado interno */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 900px;
 }
 
 .table-container {
-    width: 800px; /* Ancho de la tabla */
-    max-height: 400px; /* Alto máximo para la tabla */
-    overflow-y: auto; /* Habilita el desplazamiento vertical */
-    border: 1px solid #ddd; /* Borde del contenedor */
-}
-
-.table-container::-webkit-scrollbar{
-    
-    background-color: rgba(128, 128, 128, 0.329); /* Fondo de la barra con opacidad */
-    border-radius: 30px;
-
-}
-.table-container::-webkit-scrollbar-thumb {
-    background-color: rgba(71, 71, 71, 0.562); /* Color del botón que se mueve */
-    border-radius: 30px; /* Bordes redondeados para el botón */
-}
-
-.table-container::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(19, 19, 19, 0.8); /* Color al pasar el mouse sobre el botón */
+    width: 100%;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
 }
 
 table {
-    width: 100%; /* Ancho total del contenedor */
-    height: auto;
+    width: 100%;
     text-align: center;
-    border-collapse: collapse; /* Para eliminar el espacio entre bordes de celdas */
+    border-collapse: collapse;
 }
-
 
 thead tr {
-    font-size: 20px;
-    background-color: #f2f2f2; /* Color de fondo del encabezado */
+    background-color: #f0dfcc; /* Beige claro */
 }
 
-tbody {
-    font-size: 20px;
+tbody tr:nth-child(even) {
+    background-color: #f7f7f7; /* Gris claro */
 }
 
-tr td {
-    height: 55px;
+td {
+    padding: 12px;
+    font-size: 16px;
 }
 
 .volver {
-    margin-top: 30px;
-    height: 50px;
+    background-color: #a88e68; /* Marrón claro */
+    color: white;
+    font-size: 18px;
+    padding: 12px;
     width: 200px;
-    border-radius: 50px;
-    background-color: black;
-    color: white;
-    font-size: 20px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.volver a {
-    text-decoration: none;
-    color: white;
-}
-.volver:hover a{
-    color: #000;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
 }
 
 .volver:hover {
-    transform: translateY(-15px);
-    background-color: rgb(196, 193, 193);
-    color:black;
-    border: none;
+    background-color: #d28a61; /* Marrón medio */
+    cursor: pointer;
 }
