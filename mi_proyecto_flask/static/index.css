@@ -6,6 +6,10 @@ body {
     margin: 0;
     padding: 0;
 }
+.textocentral{
+    display: flex;
+    justify-content: center;
+}
 
 a {
     text-decoration: none;
@@ -42,11 +46,35 @@ ul {
     font-weight: 400;
     color: #8E735B; /* Madera clara */
 }
+.upload{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    width: 800px;
+    background-color: #fff;
+    font-size: 20px;
+    box-shadow: 35px 10px 20px rgba(0, 0, 0, 0.2);
+    margin-bottom: 50px;
+
+}
+.subir_img{
+    display: flex;
+    justify-content: center;
+
+    
+}
+
 
 /* Iconos de usuario */
 .iconos {
     display: flex;
+    justify-content: space-between;
     gap: 15px;
+}
+.iconosderecha{
+    color: #ffffff;
 }
 
 .login-botton {
@@ -54,12 +82,12 @@ ul {
     border: none;
     font-size: 18px;
     cursor: pointer;
-    color: #FFD700; /* Dorado */
+    color: #ffffff; /* Dorado */
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .login-botton:hover {
-    color: #FFB300; /* Amarillo mostaza */
+    color: #020202; /* Amarillo mostaza */
     transform: scale(1.1);
 }
 
@@ -78,6 +106,7 @@ ul {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 250px;
+    height: min-content;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
 }
@@ -92,7 +121,7 @@ ul {
     height: auto;
     border-radius: 8px;
     margin-bottom: 15px;
-    border: 2px solid #8E735B; /* Tono madera */
+   
 }
 
 .liproductos h2 {
@@ -103,7 +132,7 @@ ul {
 
 /* Botones */
 button, .buy-button {
-    background-color: #8E735B; /* Madera clara */
+    background-color: #050505; /* Madera clara */
     color: white;
     font-size: 14px;
     border: none;
@@ -111,6 +140,7 @@ button, .buy-button {
     border-radius: 8px;
     transition: background-color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 button:hover, .buy-button:hover {
@@ -120,6 +150,7 @@ button:hover, .buy-button:hover {
 
 /* Carrito */
 .carrito {
+    display: none; /* Ocultar carrito por defecto */
     background-color: #FFFFFF; /* Blanco */
     border-radius: 10px;
     padding: 20px;
@@ -127,6 +158,10 @@ button:hover, .buy-button:hover {
     max-width: 400px;
     margin: 20px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.carrito.mostrar{
+    display: block; /* Mostrar carrito si se activa */
+
 }
 
 .carrito h1 {

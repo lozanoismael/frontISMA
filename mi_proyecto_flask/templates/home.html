@@ -16,7 +16,11 @@
             {% if session.get('username') %}
                 <button class="login-botton"><a href="{{ url_for('logout') }}"><ion-icon name="log-out-outline"></ion-icon></a></button>
             {% endif %}
+            <button class="login-botton" ><a  href="{{ url_for('login') }}"><ion-icon name="person-outline"></ion-icon></a></button>
             <button class="login-botton" type="button" onclick="document.getElementById('carrito').classList.toggle('mostrar')"><ion-icon name="cart-outline"></ion-icon></button>
+            {%if session.get('role')=='admin'%}
+            <button class="login-botton"><a  href="{{ url_for('index') }}"><ion-icon name="storefront-outline"></ion-icon></a></button>
+            {% endif %}
         </div>
     </div>
 

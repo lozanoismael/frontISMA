@@ -15,20 +15,29 @@
   
   
 
-    <div class="textocentral">
-        <h1>PRUEBA CRUD PRODUCTOSSSS</h1>
-    </div>
-    <h1>Bienvenido {{ session['username'] }}</h1>
-    <div class="iconos">
-        {% if session.get('username') %}
-            <button class="login-botton"> <a  href="{{ url_for('logout') }}"><ion-icon name="log-in-outline"></ion-icon></a></button>
-        {% endif %}
-        <div class="iconosderecha">
-            {% if session.get('role') == 'admin' %}
-                <button class="edit-buttonicon"><a href="{{ url_for('mostrar_usuarios') }}" class="btn"><ion-icon name="people-outline"></ion-icon></a></button>
+    <div class="barra">
+        <button class="login-botton"><ion-icon name="menu-outline"></ion-icon></button>
+        <div class="logo-text">BARBERÍA <span>Insumos</span></div>
+        <div class="iconos">
+            {% if session.get('username') %}
+                <button class="login-botton"><a href="{{ url_for('logout') }}"><ion-icon name="log-out-outline"></ion-icon></a></button>
+            {% endif %}
+            
+            {%if session.get('role')=='admin'%}
+            <button class="edit-buttonicon"><a href="{{ url_for('mostrar_usuarios') }}" class="btn"><ion-icon name="people-outline"></ion-icon></a></button>
                 <button class="orders-button"><a href="{{url_for('mostrar_ordenes')}}"><ion-icon name="bag-handle-outline"></ion-icon></button></a>
                 <button class="orders-button" ><a  href="{{ url_for('home') }}"><ion-icon name="storefront-outline"></ion-icon></a></button>
             {% endif %}
+        </div>
+    </div>
+    <h1>Bienvenido {{ session['username'] }} estas en la vista ADMINISTRADOR</h1>
+    <div class="iconos">
+    
+        <div class="iconosderecha">
+            {% if session.get('role') == 'admin' %}
+                
+            {% endif %}
+            
         </div>
     </div>
     
